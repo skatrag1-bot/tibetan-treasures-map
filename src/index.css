@@ -2,95 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Himalayan Monastery Design System - Inspired by Tibetan/Sikkim aesthetics
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Himalayan color palette */
+    --background: 35 15% 96%;
+    --foreground: 220 15% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 15% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 15% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Deep monastery red as primary */
+    --primary: 0 65% 35%;
+    --primary-foreground: 0 0% 98%;
+    --primary-light: 0 55% 45%;
+    --primary-dark: 0 75% 25%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Golden accents */
+    --secondary: 45 85% 55%;
+    --secondary-foreground: 220 15% 12%;
+    --gold: 45 85% 55%;
+    --gold-dark: 45 95% 45%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Prayer flag blue */
+    --accent: 220 85% 60%;
+    --accent-foreground: 0 0% 98%;
+    --prayer-blue: 220 85% 60%;
+    --prayer-blue-light: 220 75% 70%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Monastery colors */
+    --monastery-red: 0 65% 35%;
+    --monastery-gold: 45 85% 55%;
+    --monastery-white: 0 0% 98%;
+    --monastery-orange: 25 85% 60%;
+
+    --muted: 35 25% 88%;
+    --muted-foreground: 220 15% 40%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 35 20% 85%;
+    --input: 35 20% 90%;
+    --ring: 0 65% 35%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Gradients */
+    --gradient-monastery: linear-gradient(135deg, hsl(var(--monastery-red)), hsl(var(--monastery-gold)));
+    --gradient-prayer: linear-gradient(135deg, hsl(var(--prayer-blue)), hsl(var(--prayer-blue-light)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--monastery-red)), hsl(var(--primary-dark)));
+    --gradient-card: linear-gradient(135deg, hsl(var(--card)), hsl(var(--muted)));
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Shadows */
+    --shadow-monastery: 0 10px 30px -10px hsl(var(--monastery-red) / 0.3);
+    --shadow-gold: 0 5px 20px -5px hsl(var(--gold) / 0.4);
+    --shadow-tile: 0 8px 25px -8px hsl(220 15% 12% / 0.15);
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Typography */
+    --font-monastery: 'Inter', system-ui, sans-serif;
 
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-tile: transform 0.2s ease-out, box-shadow 0.2s ease-out;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Dark mode monastery colors */
+    --background: 220 15% 8%;
+    --foreground: 35 15% 92%;
+    
+    --card: 220 15% 12%;
+    --card-foreground: 35 15% 92%;
+    
+    --primary: 0 55% 45%;
+    --monastery-red: 0 55% 45%;
+    --monastery-gold: 45 75% 65%;
+    --prayer-blue: 220 75% 70%;
   }
 }
 
@@ -101,5 +95,83 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Monastery tile animations */
+  .monastery-tile {
+    @apply relative overflow-hidden rounded-xl bg-card shadow-[var(--shadow-tile)] 
+           transition-[var(--transition-tile)] hover:scale-[1.02] hover:shadow-[var(--shadow-monastery)];
+  }
+
+  .monastery-tile::before {
+    @apply absolute inset-0 bg-gradient-to-br from-transparent to-black/20 opacity-0 
+           transition-opacity duration-300;
+    content: '';
+  }
+
+  .monastery-tile:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Navigation tiles */
+  .nav-tile {
+    @apply relative overflow-hidden rounded-2xl p-6 text-center 
+           transition-[var(--transition-tile)] hover:scale-[1.02];
+  }
+
+  .nav-tile-primary {
+    @apply bg-[var(--gradient-monastery)] text-white shadow-[var(--shadow-monastery)];
+  }
+
+  .nav-tile-secondary {
+    @apply bg-[var(--gradient-prayer)] text-white shadow-[var(--shadow-tile)];
+  }
+
+  .nav-tile-gold {
+    @apply bg-secondary text-secondary-foreground shadow-[var(--shadow-gold)];
+  }
+
+  /* Hero sections */
+  .hero-section {
+    @apply relative bg-[var(--gradient-hero)] text-white overflow-hidden;
+  }
+
+  .hero-section::before {
+    @apply absolute inset-0 bg-black/10;
+    content: '';
+  }
+
+  /* Loading animations */
+  .monastery-loading {
+    @apply animate-pulse bg-muted rounded-xl;
+  }
+
+  /* Interactive elements */
+  .monastery-button {
+    @apply inline-flex items-center justify-center rounded-lg px-6 py-3 font-medium 
+           transition-[var(--transition-smooth)] hover:scale-[1.02] 
+           focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  .monastery-button-primary {
+    @apply monastery-button bg-primary text-primary-foreground shadow-[var(--shadow-monastery)] 
+           hover:bg-primary/90;
+  }
+
+  .monastery-button-secondary {
+    @apply monastery-button bg-secondary text-secondary-foreground shadow-[var(--shadow-gold)] 
+           hover:bg-secondary/90;
+  }
+
+  .monastery-button-ghost {
+    @apply monastery-button bg-transparent border border-border hover:bg-muted;
   }
 }
