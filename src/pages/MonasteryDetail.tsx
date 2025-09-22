@@ -1,54 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, MapPin, Clock, Users, Camera, Calendar, Phone, Globe, Car } from 'lucide-react';
+import { ArrowLeft, MapPin, Clock, Users, Camera, Calendar, Star, Info, Car } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
-import encheyImage from '@/assets/enchey-monastery.jpg';
-
-// Mock data - would be fetched based on ID in real app
-const monasteryData: Record<string, any> = {
-  enchey: {
-    name: 'Enchey Monastery',
-    location: 'Gangtok, Sikkim',
-    description: 'Enchey Monastery stands majestically on a hilltop overlooking Gangtok, serving as one of the most important religious sites in Sikkim. Built in 1909, this sacred monastery belongs to the Nyingma order of Tibetan Buddhism and is dedicated to Guru Padmasambhava.',
-    founded: '1909',
-    sect: 'Nyingma',
-    images: [
-      encheyImage,
-      encheyImage,
-      encheyImage,
-      encheyImage,
-      encheyImage,
-    ],
-    quickFacts: {
-      founded: '1909',
-      sect: 'Nyingma Order',
-      standoutFeature: 'Annual Cham Festival',
-      monks: '90 resident monks',
-    },
-    visitorInfo: {
-      openingHours: '6:00 AM - 6:00 PM',
-      entryFee: 'Free',
-      dressCode: 'Modest clothing required',
-      accessibility: 'Partial wheelchair access',
-      bestTime: 'October to March',
-      photography: 'Allowed in courtyard only',
-    },
-    features: [
-      'Ancient prayer wheels',
-      'Colorful Buddhist murals',
-      'Traditional Tibetan architecture',
-      'Meditation halls',
-      'Sacred relics collection',
-      'Annual masked dance festival',
-    ],
-    festivals: [
-      { name: 'Cham Festival', date: 'December/January', description: 'Sacred masked dance performances' },
-      { name: 'Losar', date: 'February/March', description: 'Tibetan New Year celebrations' },
-    ],
-  },
-};
+import { Separator } from '@/components/ui/separator';
+import PhotoCarousel from '@/components/PhotoCarousel';
+import GoogleMap from '@/components/GoogleMap';
+import { monasteryData } from '@/data/monasteryData';
 
 export default function MonasteryDetail() {
   const { id } = useParams<{ id: string }>();
@@ -59,8 +17,10 @@ export default function MonasteryDetail() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Monastery not found</h1>
-          <Link to="/explore" className="monastery-button-primary">
-            Back to Explore
+          <Link to="/explore">
+            <Button className="monastery-button-primary">
+              Back to Explore
+            </Button>
           </Link>
         </div>
       </div>
@@ -136,23 +96,35 @@ export default function MonasteryDetail() {
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-8">
               
-              {/* Photo Gallery */}
+              {/* Photo Carousel */}
+              <PhotoCarousel 
+                images={monastery.images} 
+                title="Photo Gallery" 
+              />
+
+              {/* History & Overview */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <Camera className="h-5 w-5 mr-2" />
-                    Photo Gallery
+                    <Info className="h-5 w-5 mr-2" />
+                    History & Overview
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {monastery.images.slice(1).map((image: string, index: number) => (
-                      <div 
-                        key={index}
-                        className="aspect-square bg-cover bg-center rounded-lg hover:scale-105 transition-transform cursor-pointer"
-                        style={{ backgroundImage: `url(${image})` }}
-                      />
-                    ))}
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    {monastery.history}
+                  </p>
+                  <Separator />
+                  <div>
+                    <h4 className="font-semibold mb-3">Key Highlights</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {monastery.highlights.map((highlight: string, index: number) => (
+                        <div key={index} className="flex items-center space-x-2">
+                          <Star className="h-4 w-4 text-gold shrink-0" />
+                          <span className="text-sm">{highlight}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -160,14 +132,14 @@ export default function MonasteryDetail() {
               {/* Features */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Key Features</CardTitle>
+                  <CardTitle>Monastery Features</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {monastery.features.map((feature: string, index: number) => (
                       <div key={index} className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-primary rounded-full" />
-                        <span>{feature}</span>
+                        <div className="w-2 h-2 bg-primary rounded-full shrink-0" />
+                        <span className="text-sm">{feature}</span>
                       </div>
                     ))}
                   </div>
@@ -221,6 +193,12 @@ export default function MonasteryDetail() {
                     <span className="text-muted-foreground">Community</span>
                     <span className="font-medium">{monastery.quickFacts.monks}</span>
                   </div>
+                  {monastery.quickFacts.altitude && (
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Altitude</span>
+                      <span className="font-medium">{monastery.quickFacts.altitude}</span>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
@@ -257,24 +235,12 @@ export default function MonasteryDetail() {
                 </CardContent>
               </Card>
 
-              {/* Interactive Map Placeholder */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <MapPin className="h-5 w-5 mr-2" />
-                    Location
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="bg-muted rounded-lg h-48 flex items-center justify-center mb-4">
-                    <p className="text-muted-foreground">Interactive Map Coming Soon</p>
-                  </div>
-                  <Button className="w-full monastery-button-primary">
-                    <Car className="h-4 w-4 mr-2" />
-                    Get Directions
-                  </Button>
-                </CardContent>
-              </Card>
+              {/* Interactive Google Map */}
+              <GoogleMap 
+                coordinates={monastery.coordinates}
+                title={monastery.name}
+                address={monastery.location}
+              />
             </div>
           </div>
         </div>
